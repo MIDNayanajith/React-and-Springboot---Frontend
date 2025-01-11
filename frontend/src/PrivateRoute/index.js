@@ -3,7 +3,7 @@ import { useLocalState } from "../util/UseLocalStorage";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
-  const { jwt, setJwt } = useLocalState("", "jwt");
+  const [jwt, setJwt] = useLocalState("", "jwt");
   return jwt ? children : <Navigate to="/login" />;
 };
 
