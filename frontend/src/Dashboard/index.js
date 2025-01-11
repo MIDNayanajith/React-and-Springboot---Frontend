@@ -37,12 +37,8 @@ const Dashboard = () => {
         window.location.href = `assignments/${assignment.id}`;
       });
   }
+
   return (
-
-    <div>
-      <h1>This is dashboard</h1>
-      <div>JWT VALUE IS : {jwt}</div>
-
     <div
       style={{
         display: "flex",
@@ -55,7 +51,6 @@ const Dashboard = () => {
     >
       <h1>Welcome To Dashboard</h1>
       <div style={{ margin: "2em" }}>
-
         {assignments ? (
           assignments.map((assignment) => (
             <div>
@@ -68,14 +63,11 @@ const Dashboard = () => {
           <></>
         )}
 
-
-
         <button onClick={() => createAssignment()}>
           {" "}
           Submit new Assignment{" "}
         </button>
       </div>
-
     </div>
   );
 };
