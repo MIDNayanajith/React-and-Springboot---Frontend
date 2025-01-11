@@ -8,6 +8,7 @@ import HomePage from "./HomePage";
 import PrivateRoute from "./PrivateRoute";
 
 import Login from "./Login";
+import AssignmentView from "./AssignmentView";
 
 function App() {
   const [jwt, setJwt] = useLocalState("", "jwt");
@@ -21,6 +22,14 @@ function App() {
         element={
           <PrivateRoute>
             <Dashboard />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/assignments/:id"
+        element={
+          <PrivateRoute>
+            <AssignmentView />
           </PrivateRoute>
         }
       />
