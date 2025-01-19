@@ -9,7 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import Login from "./Login";
 import AssignmentView from "./AssignmentView";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [jwt, setJwt] = useLocalState("", "jwt");
 
