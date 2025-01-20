@@ -42,35 +42,41 @@ const Login = () => {
 
   return (
     <>
-      <Container className="mt-5">
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label htmlFor="username" className="fs-4">
-            User Name{" "}
-          </Form.Label>
-          <Form.Control
-            type="email"
-            id="username"
-            placeholder="Enter email"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label htmlFor="password" className="fs-4">
-            Password
-          </Form.Label>
-          <Form.Control
-            type="password"
-            id="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
+      <Container className="mt-5 ">
+        <Row>
+          <Col md="8" lg="6">
+            <Form.Group className="mb-3" controlId="username">
+              <Form.Label className="fs-4">User Name </Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
 
         <Row>
-          <Col className="mt-2">
+          <Col md="8" lg="6">
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label className="fs-4">Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col
+            md="8"
+            lg="6"
+            className="mt-2 d-flex flex-column gap-3 flex-md-row justify-content-between"
+          >
             <Button
               id="submit"
               type="button"
@@ -78,6 +84,16 @@ const Login = () => {
               onClick={() => sendLoginRequest()}
             >
               Login
+            </Button>
+            <Button
+              variant="danger"
+              type="button"
+              size="lg"
+              onClick={() => {
+                window.location.href = "/";
+              }}
+            >
+              Exit
             </Button>
           </Col>
         </Row>
