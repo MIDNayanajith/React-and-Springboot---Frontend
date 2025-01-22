@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useLocalState } from "../util/UseLocalStorage";
 import ajax from "../service/fetchservice";
+import {
+  Button,
+  Form,
+  Col,
+  Row,
+  Container,
+  Badge,
+  DropdownButton,
+  ButtonGroup,
+  Dropdown,
+} from "react-bootstrap";
 
 const AssignmentView = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
@@ -35,36 +46,80 @@ const AssignmentView = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Assignment {assignmentId}</h1>
+    <Container className="mt-5">
+      <Row className="d-flex align-items-center">
+        <Col>
+          <h1>Assignment {assignmentId}</h1>
+        </Col>
+
+        <Col>
+          <Badge pill bg="info" style={{ fontSize: "1em" }}>
+            {assignment.status}
+          </Badge>
+        </Col>
+      </Row>
 
       {assignment ? (
         <>
-          <h3>Status: {assignment.status}</h3>
-          <h3>
-            GitHub URL:{" "}
-            <input
-              type="url"
-              id="githuburl"
-              onChange={(e) => updateAssignment("githuburl", e.target.value)}
-              value={assignment.githuburl}
-            />
-          </h3>
-          <h3>
-            Branch:{" "}
-            <input
-              type="text"
-              id="branch"
-              onChange={(e) => updateAssignment("branch", e.target.value)}
-              value={assignment.branch}
-            />
-          </h3>
-          <button onClick={() => save()}>Submit Assignment</button>
+          <Form.Group as={Row} className="my-3" controlId="formPlaintextEmail">
+            <Form.Label column sm="3" md="2">
+              Assignement Number:
+            </Form.Label>
+            <Col sm="9" md="8" lg="6">
+              <DropdownButton
+                as={ButtonGroup}
+                id="assignmentName"
+                variant={"info"}
+                title="Assignment 1"
+              >
+                {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map(
+                  (assignmentNum) => (
+                    <Dropdown.Item eventKey={assignmentNum}>
+                      {assignmentNum}
+                    </Dropdown.Item>
+                  )
+                )}
+              </DropdownButton>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="my-3" controlId="formPlaintextEmail">
+            <Form.Label column sm="3" md="2">
+              GitHub URL:
+            </Form.Label>
+            <Col sm="9" md="8" lg="6">
+              <Form.Control
+                type="url"
+                id="githuburl"
+                onChange={(e) => updateAssignment("githuburl", e.target.value)}
+                value={assignment.githuburl}
+                placeholder="Enter github url here."
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+            <Form.Label column sm="3" md="2">
+              Branch :
+            </Form.Label>
+            <Col sm="9" md="8" lg="6">
+              <Form.Control
+                type="text"
+                id="branch"
+                onChange={(e) => updateAssignment("branch", e.target.value)}
+                value={assignment.branch}
+                placeholder="Enter branch url here."
+              />
+            </Col>
+          </Form.Group>
+
+          <Button variant="success" onClick={() => save()}>
+            Submit Assignment
+          </Button>
         </>
       ) : (
         <></>
       )}
-    </div>
+    </Container>
   );
 };
 

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocalState } from "../util/UseLocalStorage";
 import { Link } from "react-router-dom";
 import ajax from "../service/fetchservice";
-
+import Card from "react-bootstrap/Card";
+import { Button } from "react-bootstrap";
 const Dashboard = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [assignments, setAssignments] = useState(null);
@@ -20,35 +21,51 @@ const Dashboard = () => {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh", // Full viewport height for centering
-        textAlign: "center", // Center-align text
-      }}
-    >
-      <h1>Welcome To Dashboard</h1>
-      <div style={{ margin: "2em" }}>
-        {assignments ? (
-          assignments.map((assignment) => (
-            <div key={assignment.id}>
-              <Link to={`/assignments/${assignment.id}`}>
-                Assignment Id : {assignment.id}
-              </Link>
-            </div>
-          ))
-        ) : (
-          <></>
-        )}
-
-        <button onClick={() => createAssignment()}>
-          {" "}
-          Submit new Assignment{" "}
-        </button>
+    <div style={{ margin: "2em" }}>
+      <h2>Welcome To Dashboard</h2>
+      <div className="mb-5 me-3 mt-3">
+        <Button variant="success" onClick={() => createAssignment()}>
+          Submit new Assignment
+        </Button>
       </div>
+
+      {assignments ? (
+        <div
+          className="d-grid gap-5"
+          style={{ gridTemplateColumns: "repeat(auto-fit,18rem)" }}
+        >
+          {assignments.map((assignment) => (
+            <Card
+              key={assignment.id}
+              style={{ width: "18rem", height: "18rem" }}
+            >
+              <Card.Body className="d-flex flex-column justify-content-around">
+                <Card.Title>Assignment#{assignment.id}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  {assignment.status}
+                </Card.Subtitle>
+                <Card.Text style={{ marginTop: "1rem" }}>
+                  <div>
+                    <b>GitHub URL: {assignment.githuburl}</b>
+                  </div>
+                  <div>
+                    <b>Branch : {assignment.branch}</b>
+                  </div>
+                </Card.Text>
+                <Button
+                  onClick={() => {
+                    window.location.href = `/assignments/${assignment.id}`;
+                  }}
+                >
+                  Edit
+                </Button>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
