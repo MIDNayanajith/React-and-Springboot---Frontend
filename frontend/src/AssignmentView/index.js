@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocalState } from "../util/UseLocalStorage";
 import ajax from "../service/fetchservice";
 import {
@@ -25,21 +25,26 @@ const AssignmentView = () => {
   const [assignmentEnums, setAssignmentEnums] = useState([]);
   const [assignmentStatus, setAssignmentStatus] = useState([]);
 
-  async function updateAssignment(prop, value) {
+  const PreviousAssignment = useRef(assignment);
+
+  function updateAssignment(prop, value) {
     const newAssignment = { ...assignment };
     newAssignment[prop] = value;
-    await setAssignments(newAssignment);
+    setAssignments(newAssignment);
   }
 
   function save() {
-    console.log(`status is ${assignment.status}`);
-
     // Ensure the status is updated before submitting
     if (assignment.status === assignmentStatus[0].status) {
       console.log("setting new status to be");
       updateAssignment("status", assignmentStatus[1].status);
+    } else {
+      console.log("Updated assignment before persist:", assignment);
+      persist();
     }
+  }
 
+  function persist() {
     ajax(`/api/assignments/${assignmentId}`, "PUT", jwt, assignment).then(
       (assignmentsData) => {
         setAssignments(assignmentsData);
@@ -47,6 +52,13 @@ const AssignmentView = () => {
       }
     );
   }
+  useEffect(() => {
+    console.log("Previous value of assignment", PreviousAssignment.current);
+    if (PreviousAssignment.current.status !== assignment.status) {
+      persist();
+    }
+    PreviousAssignment.current = assignment;
+  }, [assignment]);
 
   useEffect(() => {
     ajax(`/api/assignments/${assignmentId}`, "GET", jwt).then(
