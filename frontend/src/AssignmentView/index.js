@@ -152,10 +152,18 @@ const AssignmentView = () => {
               />
             </Col>
           </Form.Group>
-
-          <Button variant="success" onClick={() => save()}>
-            Submit Assignment
-          </Button>
+          <div className="d-flex gap-5">
+            <Button variant="success" onClick={() => save()}>
+              Submit Assignment
+            </Button>
+            <Button
+              size="lg"
+              variant="danger"
+              onClick={() => (window.location.href = "/dashboard")}
+            >
+              Back
+            </Button>
+          </div>
         </>
       ) : (
         <></>
