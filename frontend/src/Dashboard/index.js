@@ -3,7 +3,7 @@ import { useLocalState } from "../util/UseLocalStorage";
 import { Link } from "react-router-dom";
 import ajax from "../service/fetchservice";
 import Card from "react-bootstrap/Card";
-import { Button } from "react-bootstrap";
+import { Badge, Button } from "react-bootstrap";
 const Dashboard = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [assignments, setAssignments] = useState(null);
@@ -40,10 +40,12 @@ const Dashboard = () => {
               style={{ width: "18rem", height: "18rem" }}
             >
               <Card.Body className="d-flex flex-column justify-content-around">
-                <Card.Title>Assignment#{assignment.id}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {assignment.status}
-                </Card.Subtitle>
+                <Card.Title>Assignment#{assignment.number}</Card.Title>
+                <div className="d-flex align-items-start">
+                  <Badge pill bg="info" style={{ fontSize: "1em" }}>
+                    {assignment.status}
+                  </Badge>
+                </div>
                 <Card.Text style={{ marginTop: "1rem" }}>
                   <div>
                     <b>GitHub URL: {assignment.githuburl}</b>
@@ -52,6 +54,7 @@ const Dashboard = () => {
                     <b>Branch : {assignment.branch}</b>
                   </div>
                 </Card.Text>
+
                 <Button
                   onClick={() => {
                     window.location.href = `/assignments/${assignment.id}`;
